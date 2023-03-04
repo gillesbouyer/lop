@@ -21,7 +21,7 @@ else:
 
 acp_model = pickle.load(open('xgb_acp_model.sav', 'rb'))
 amp_model = pickle.load(open('xgb_amp_model.sav', 'rb'))
-dna_model = pickle.load(open('Xgb_dna_binding_model.sav', 'rb'))
+dna_model = pickle.load(open('xgb_dna_binding_model.sav', 'rb'))
 
 # initialize test results
 resultsacp = ''
