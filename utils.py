@@ -46,6 +46,7 @@ def TransformACP(x):
         X_sample = df.drop(columns=['sequences','label']).values
         X_sample = X_sample.astype(np.float64)
         return X_sample
+
 ##### AMP AMP AMP AMP ##############
 def TransformAMP(x):
         data = {'SequenceID': [x], 'label': [0]}
@@ -67,3 +68,25 @@ def TransformAMP(x):
         X_sample2 = np.hstack((X_sample, b))
         X_sample2 = X_sample2.astype(np.float64)
         return X_sample2
+
+##### DNA DNA DNA DNA ##############
+def TransformDNA(x):
+        data = {'sequence': [x], 'label': [0]}
+        df = pd.DataFrame(data)
+        df_split = df['sequence'].str.split(pat="", expand=True)
+        df2 = df[['sequence','label']].join(df_split) 
+        letter_2num = {
+        s: i for i, s in enumerate(
+            ['','A', 'B', 'C', 'D', 'E', 'F', 'G','H','I','J','K','L','M',
+            'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
+            }
+        for column in df2.columns[3:]:
+            df2[column] = df2[column].replace(letter_2num) 
+        df2.to_csv('toto.csv') 
+        df3 = pd.read_csv('toto.csv')
+        df4=df3.fillna(0)
+        X_sample= df4.drop(columns=['Unnamed: 0','sequence','label']).values
+        b = np.zeros((1, 4913-X_sample.shape[1]))
+        X_sample2 = np.hstack((X_sample, b))
+        X_sample2 = X_sample2.astype(np.float64)
+        return X_sample2 #
